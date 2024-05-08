@@ -18,6 +18,7 @@ class About(models.Model):
     is_published = models.BooleanField(choices=Status.choices, default=Status.PUBLISHED)
     cat = models.ForeignKey('Category', on_delete=models.PROTECT)
     tags = models.ManyToManyField('TagPost', blank=True, related_name='tags')
+    link = models.OneToOneField('Link', on_delete=models.SET_NULL, null=True, blank=True, related_name='video')
 
     objects = models.Manager()
     published = PublishedManager()
@@ -49,3 +50,10 @@ class TagPost(models.Model):
 
     def get_absolute_url(self):
         return reverse('tag', kwargs={'tag_slug': self.slug})
+
+
+class Link(models.Model):
+    video_link = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.video_link
