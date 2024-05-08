@@ -18,7 +18,8 @@
     {% endfor %}
 </ul>
 <ul>
-{% show_categories cat_selected %}
+    {% show_categories cat_selected %}
+    <li>{% show_all_tags %}</li>
 </ul>
 {% block content %} {% endblock %}
 

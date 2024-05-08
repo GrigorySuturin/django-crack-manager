@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 
-from .models import About, Category
+from .models import About, Category, TagPost
 
 menu = [
     {'title': 'Описание', 'url_name': 'about'},
@@ -70,4 +70,17 @@ def show_category(request, cat_slug):
         'posts': posts,
         'cat_selected': category.pk,
     }
+    return render(request, 'about/index.html', context=data)
+
+
+def show_tagpost(request, tag_slug):
+    tag = get_object_or_404(TagPost, slug=tag_slug)
+    posts = tag.tags.filter(is_published=About.Status.PUBLISHED)
+
+    data = {
+        'title': f'Tag: {tag.tag}',
+        'menu': menu,
+        'posts': posts,
+    }
+
     return render(request, 'about/index.html', context=data)

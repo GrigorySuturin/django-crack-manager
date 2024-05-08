@@ -3,4 +3,14 @@
 {% block content %}
 <h3>{{post.title}}</h3>
 {{post.content|linebreaks}}
+{% with post.tags.all as tags %}
+{% if tags  %}
+<ul class="tag_list">
+  Tags
+  {% for t in tags %}
+  <li><a href="{{ t.get_absolute_url }}">{{ t.tag }}</a></li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
 {%endblock%}
